@@ -1,12 +1,12 @@
 [
   {
-    "name": "Bastion",
+    "name": "Bastion Browser",
     "url": "installers/Bastion Setup 0.1.0.exe",
     "size": null,
     "date": null
   },
   {
-    "name": "Dotus",
+    "name": "Dotus Database Manager",
     "url": "installers/Dotus Setup 0.1.0.exe",
     "size": null,
     "date": null
