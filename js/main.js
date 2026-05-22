@@ -20,6 +20,7 @@ async function loadInstallers() {
   }
 
   renderInstallers();
+  fetchCounts();
 }
 
 function renderInstallers() {
@@ -36,12 +37,37 @@ function renderInstallers() {
   container.innerHTML = filtered.map(f => `
     <div class="installer-card">
       <h3>${escapeHtml(f.name)}</h3>
-      <div class="meta">${formatSize(f.size)}</div>
+      <div class="meta">
+        <span class="download-count" id="count-${escapeHtml(f.name)}">⬇ ${f.count ?? 0}</span>
+        ${formatSize(f.size) ? '| ' + formatSize(f.size) : ''}
+      </div>
       <div class="actions">
-        <a href="${f.url}" class="btn btn-primary" download>Download</a>
+        <a href="${f.url}" class="btn btn-primary" onclick="trackDownload('${escapeHtml(f.name)}')">Download</a>
       </div>
     </div>
   `).join('');
+}
+
+async function fetchCounts() {
+  for (const inst of installers) {
+    try {
+      const res = await fetch(`https://api.countapi.xyz/get/download-hub/${encodeURIComponent(inst.name)}`);
+      const data = await res.json();
+      inst.count = data.value;
+    } catch {}
+  }
+  renderInstallers();
+}
+
+async function trackDownload(name) {
+  try {
+    const res = await fetch(`https://api.countapi.xyz/hit/download-hub/${encodeURIComponent(name)}`);
+    const data = await res.json();
+    const el = document.getElementById(`count-${name}`);
+    if (el) el.textContent = `⬇ ${data.value}`;
+    const inst = installers.find(i => i.name === name);
+    if (inst) inst.count = data.value;
+  } catch {}
 }
 
 function escapeHtml(str) {

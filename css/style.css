@@ -87,6 +87,10 @@ main {
   margin-bottom: 0.75rem;
 }
 
+.download-count {
+  font-variant-numeric: tabular-nums;
+}
+
 .installer-card .actions {
   display: flex;
   gap: 0.5rem;
