@@ -11,21 +11,9 @@ async function loadInstallers() {
   }
 
   try {
-    const res = await fetch('installers/');
-    const text = await res.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(text, 'text/html');
-    const links = [...doc.querySelectorAll('a')]
-      .map(a => a.getAttribute('href'))
-      .filter(h => h && !h.endsWith('/') && !h.startsWith('?'));
-
-    installers = links.map(name => ({
-      name,
-      url: `installers/${name}`,
-      size: null,
-      date: null,
-    }));
-
+    const res = await fetch('installers/manifest.json');
+    if (!res.ok) throw new Error('No manifest');
+    installers = await res.json();
     sessionStorage.setItem(INSTALLERS_KEY, JSON.stringify(installers));
   } catch {
     installers = [];
