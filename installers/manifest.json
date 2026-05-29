@@ -10,5 +10,11 @@
     "url": "installers/Dotus Setup 0.1.0.exe",
     "size": null,
     "date": null
+  },
+  {
+    "name": "Voidsword",
+    "url": "installers/voidsword-1.0.0.jar",
+    "size": null,
+    "date": null
   }
 ]
