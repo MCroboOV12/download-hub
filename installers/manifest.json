@@ -16,5 +16,11 @@
     "url": "installers/voidsword-1.0.0.jar",
     "size": null,
     "date": null
+  },
+  {
+    "name": "Invsee",
+    "url": "installers/invsee-1.0.0.jar",
+    "size": null,
+    "date": null
   }
 ]
